@@ -45,17 +45,7 @@ class CWAUCHLoss(nn.Module):
                 penalty_term = torch.mean((1-(trans_pos-trans_neg)).pow(self.lamb)) / self.lamb
         except:
             import pdb;pdb.set_trace()
-        """
-            import pdb;pdb.set_trace()
-            for i in range(num_pos):
-                for j in range(num_neg):
-                    penalty_term_sum += (1-(out_pos[i]-out_neg[j])).pow(2)
-            import pdb;pdb.set_trace()
 
-            num_pos = np.max((out_pos.shape[0],1))
-            num_neg = np.max((out_neg.shape[0],1))
-            penalty_term = penalty_term_sum / (2 * num_pos * num_neg)
-        """
         cls = self.classify_loss(outs,labels)[0] + self.alpha * penalty_term
         # import pdb;pdb.set_trace()
         return cls, self.alpha * penalty_term
